@@ -1,73 +1,166 @@
-# Welcome to your Lovable project
+# Finzen Spark AI Lens
 
-## Project info
+A comprehensive financial management application with AI agent capabilities, built with React frontend and Python FastAPI backend.
 
-**URL**: https://lovable.dev/projects/6e2cfe81-8b5a-43bd-b9bc-db29cb90c2bb
+## 🚀 Features
 
-## How can I edit this code?
+- **Financial Management**: Track expenses, income, and transactions
+- **AI Agent Integration**: Powered by Google ADK (Agent Development Kit)
+- **Modern UI**: Built with React, TypeScript, and Shadcn/ui
+- **Cloud Ready**: Designed for Google Cloud Run deployment
 
-There are several ways of editing your application.
+## 🏗️ Architecture
 
-**Use Lovable**
+### Frontend (React + TypeScript)
+- **Framework**: React 18 with TypeScript
+- **UI Library**: Shadcn/ui components
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6e2cfe81-8b5a-43bd-b9bc-db29cb90c2bb) and start prompting.
+### Backend (Python FastAPI)
+- **Framework**: FastAPI with Google ADK
+- **AI**: Google Generative AI integration
+- **Deployment**: Google Cloud Run ready
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📁 Project Structure
 
-**Use your preferred IDE**
+```
+finzen-spark-ai-lens/
+├── src/                    # React frontend
+│   ├── components/         # UI components
+│   ├── pages/             # Page components
+│   └── lib/               # Utilities
+├── backend/               # Python FastAPI backend
+│   ├── server.py          # Main FastAPI server
+│   ├── hackathon_agent/   # AI agent implementation
+│   ├── pyproject.toml     # Python dependencies
+│   └── .env.example       # Environment template
+├── public/                # Static assets
+└── README.md              # This file
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Setup Instructions
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
+- Node.js 18+ and npm
+- Python 3.12+
+- uv (Python package manager)
+- Google Cloud Project with API access
 
-Follow these steps:
+### Frontend Setup
+```bash
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Backend Setup
+```bash
+# Navigate to backend directory
+cd backend
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Install Python dependencies
+uv sync
 
-**Use GitHub Codespaces**
+# Copy environment template
+cp .env.example .env
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Edit .env with your API keys
+# Add your Google Cloud Project ID and API key
 
-## What technologies are used for this project?
+# Start backend server
+uv run uvicorn server:app --host 0.0.0.0 --port 8083 --reload
+```
 
-This project is built with:
+## 🔧 Environment Variables
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Create a `.env` file in the `backend/` directory with:
 
-## How can I deploy this project?
+```env
+GEMMA_URL=
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_LOCATION=europe-west4
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=your-api-key-here
+```
 
-Simply open [Lovable](https://lovable.dev/projects/6e2cfe81-8b5a-43bd-b9bc-db29cb90c2bb) and click on Share -> Publish.
+## 🚀 Development
 
-## Can I connect a custom domain to my Lovable project?
+### Running Locally
+1. Start the backend: `cd backend && uv run uvicorn server:app --host 0.0.0.0 --port 8083 --reload`
+2. Start the frontend: `npm run dev`
+3. Access the application at `http://localhost:8082`
 
-Yes, you can!
+### API Endpoints
+- `GET /health` - Health check
+- `POST /feedback` - Submit feedback
+- Additional ADK endpoints available
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🐳 Docker Deployment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Backend Docker
+```bash
+cd backend
+docker build -t finzen-backend .
+docker run -p 8083:8080 finzen-backend
+```
+
+### Frontend Docker
+```bash
+docker build -t finzen-frontend .
+docker run -p 8082:80 finzen-frontend
+```
+
+## ☁️ Google Cloud Run Deployment
+
+### Prerequisites
+- Google Cloud SDK installed
+- Project with Cloud Run API enabled
+- Docker images built and pushed
+
+### Deploy Backend
+```bash
+# Build and push to Google Container Registry
+gcloud builds submit --tag gcr.io/PROJECT_ID/finzen-backend
+
+# Deploy to Cloud Run
+gcloud run deploy finzen-backend \
+  --image gcr.io/PROJECT_ID/finzen-backend \
+  --platform managed \
+  --region europe-west4 \
+  --allow-unauthenticated
+```
+
+### Deploy Frontend
+```bash
+# Build and push to Google Container Registry
+gcloud builds submit --tag gcr.io/PROJECT_ID/finzen-frontend
+
+# Deploy to Cloud Run
+gcloud run deploy finzen-frontend \
+  --image gcr.io/PROJECT_ID/finzen-frontend \
+  --platform managed \
+  --region europe-west4 \
+  --allow-unauthenticated
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the Apache License 2.0.
+
+## 🔗 Links
+
+- [Google ADK Documentation](https://github.com/google/adk)
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [React Documentation](https://react.dev/)
+- [Shadcn/ui](https://ui.shadcn.com/)
