@@ -4,6 +4,8 @@ import CardManager from '@/components/CardManager';
 import ExpenseInput from '@/components/ExpenseInput';
 import TransactionLog, { Transaction } from '@/components/TransactionLog';
 import ChatInterface from '@/components/ChatInterface';
+import { AIAgent } from '@/components/AIAgent';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface Message {
   id: string;
@@ -123,8 +125,19 @@ const Index = () => {
         {/* Right Main Area */}
         <div className="flex-1 flex flex-col lg:h-screen">
           <Header />
-          <div className="flex-1 min-h-[500px] lg:min-h-0">
-            <ChatInterface messages={messages} />
+          <div className="flex-1 min-h-[500px] lg:min-h-0 p-4">
+            <Tabs defaultValue="chat" className="w-full h-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="chat">Card Assistant</TabsTrigger>
+                <TabsTrigger value="ai">AI Financial Agent</TabsTrigger>
+              </TabsList>
+              <TabsContent value="chat" className="h-full">
+                <ChatInterface messages={messages} />
+              </TabsContent>
+              <TabsContent value="ai" className="h-full">
+                <AIAgent />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
